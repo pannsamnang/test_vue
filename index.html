@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ message }}</h1>
+      <h1>{{ number + 10}}</h1>
+      <h1>{{ isActive ? "You're active." : "sorry, you're not active"}}</h1>
+      <!-- binding data into html attribute -->
+      <a v-bind:href="url">{{url}}</a>
+      <a :href="url">{{url}}</a>
+      <!-- two way binding -->
+      <form class="" method="post">
+        <input v-model="inputText" type="text" name="" value="">
+        <div class="custom-control custom-checkbox">
+          <input v-model='options' type="checkbox" class="custom-control-input" id="customCheck1" value="1">
+          <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input v-model='options' type="checkbox" class="custom-control-input" id="customCheck2"  value="2">
+          <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input v-model='options' type="checkbox" class="custom-control-input" id="customCheck3"  value="3">
+          <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+        </div>
+      </form>
+      <p :style="{ fontSize: fontSize + 'px', color: 'red' }">{{inputText}}</p>
+      {{options.join(', ')}}
+
+      <!-- binding with js event directive-->
+      <h1 v-on:click="myNumber++">{{myNumber}}</h1>
+      <h1 v-on:click="myNumber--">Descrease</h1>
+      <form class="" @submit.prevent="myNumber++">
+        <button type="submit" name="button">Inscrease</button>
+      </form>
+
+      <button type="button" name="button" @click="inscreaseFont">Inscrease the Font</button>
+      <button type="button" name="button" @click="descreaseFont">Descrease the Font</button>
+      <div :style="{ fontSize: fontSize+'px'}">
+        Test Font Size
+      </div>
+
+      <!-- testing computed just like helper -->
+      <h3>
+        Reverse Hello to {{ revertHello }}
+      </h3>
+      <post></post>
+      <inline-template-component inline-template>
+        <button @click="display">Here is inline template component</button>
+      </inline-template-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript">
+      Vue.component('post', {
+        template: '<h1>template</h1>'
+      });
+      Vue.component('inline-template-component', {
+        data() {
+          return {}
+        },
+        methods: {
+          display: function() {
+            console.log('inline template component');
+          }
+        }
+      });
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          message: 'hello',
+          number: 10,
+          isActive: true,
+          url: 'https://www.google.com.kh/',
+          inputText: '',
+          options: [],
+          myNumber: 10,
+          fontSize: 16
+        },
+        methods: {
+          inscreaseFont: function() {
+            this.fontSize++;
+          },
+          descreaseFont: function() {
+            if (this.fontSize > 1) {
+              this.fontSize--;
+            }
+          }
+        },
+        computed: {
+          revertHello: function() {
+            return this.message.split('').reverse('').join('');
+          }
+        },
+        // watch just like server
+        watch: {
+          isActive: function(value) {
+            console.log('You are ' + value);
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

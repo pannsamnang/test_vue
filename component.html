@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <post></post>
+      <inline-template-component inline-template>
+        <h1 @click="display">Click Me {{count}}</h1>
+      </inline-template-component>
+      <props-component :number='0'></props-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <script type="text/javascript">
+      Vue.component('post', {
+        template: `<h1>Hello</h1>`
+      });
+      Vue.component('inline-template-component', {
+        data() {
+          return {
+            count: 0
+          }
+        },
+        methods: {
+          display: function() {
+            console.log('inline template component');
+            this.count++;
+          }
+        }
+      });
+      Vue.component('props-component', {
+        props: ['number'],
+        template: `<h1 @click="inscreaseNumber">You clicked me {{number}}!!</h1>`,
+        methods: {
+          inscreaseNumber() {
+            this.number++;
+          }
+        }
+      })
+      new Vue({
+        el: '#app'
+      });
+    </script>
+  </body>
+</html>
