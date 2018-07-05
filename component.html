@@ -11,6 +11,8 @@
         <h1 @click="display">Click Me {{count}}</h1>
       </inline-template-component>
       <props-component :number='0'></props-component>
+      <h1>component nestest</h1>
+      <nestest-component></nestest-component>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
@@ -39,6 +41,28 @@
             this.number++;
           }
         }
+      });
+      Vue.component('nestest-component', {
+        template: `<div>
+                      <ul>
+                        <child v-for="(post, key) in posts" :key="key">{{post.title}}</child>
+                      </ul>
+                    </div>`,
+        data() {
+          return {
+            posts: [
+              { id: 1, title: 'post 1' },
+              { id: 2, title: 'post 2' },
+              { id: 3, title: 'post 3' },
+              { id: 4, title: 'post 4' },
+              { id: 5, title: 'post 5' },
+            ]
+          }
+        }
+      });
+      Vue.component('child', {
+        // use slot element to get all data inside parent div
+        template: '<li><slot></slot></li>'
       })
       new Vue({
         el: '#app'
